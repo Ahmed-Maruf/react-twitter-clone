@@ -1,21 +1,27 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
+
+import {handleAddTweet} from '../actions/tweets';
 
 class NewTweet extends Component {
   state = {
     text: '',
-    
+    home: false
   };
   
   handleSubmit = (e) => {
     e.preventDefault();
-    const {text} = this.state;
+    const {text, home} = this.state;
+    const {dispatch, id} = this.props;
+    
+    dispatch(handleAddTweet(text, id));
     
     this.setState(() => ({
       text: '',
+      home: id ? false : true
     }));
     
-    //Todo: Redirect to home view if submited
   };
   
   handleChange = (e) => {
@@ -28,7 +34,13 @@ class NewTweet extends Component {
   
   render() {
     const tweetLeft = 280 - this.state.text.length;
+    
+    if (this.state.home) {
+      return <Redirect to='/'/>
+    }
     return (
+        
+        
         <div>
           <h3 className='center'>Compose new tweet</h3>
           <form className='new-tweet' onSubmit={this.handleSubmit}>

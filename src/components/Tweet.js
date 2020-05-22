@@ -5,6 +5,7 @@ import {TiArrowBackOutline} from 'react-icons/all';
 import {TiHeartFullOutline} from 'react-icons/all';
 import {TiHeartOutline} from 'react-icons/all';
 import {handleToggleTweet} from '../actions/tweets';
+import {Link} from 'react-router-dom';
 
 class Tweet extends Component {
   
@@ -36,10 +37,10 @@ class Tweet extends Component {
     }
     
     console.log('Tweet now: ', tweet);
-    const {name, avatar, timestamp, parent, text, hasLiked, replies, likes} = this.props.tweet;
+    const {name, avatar, timestamp, parent, text, hasLiked, replies, likes, id} = this.props.tweet;
     
     return (
-        <div className='tweet'>
+        <Link to={`/tweet/${id}`} className='tweet'>
           <img className='avatar' src={avatar} alt={`The name of the avatar is ${name}`}/>
           <div className='tweet-info'>
             <div>
@@ -67,7 +68,7 @@ class Tweet extends Component {
               <span>{likes !== 0 && likes}</span>
             </div>
           </div>
-        </div>
+        </Link>
     );
   }
   

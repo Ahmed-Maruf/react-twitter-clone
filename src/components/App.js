@@ -4,6 +4,7 @@ import {handleInitialData} from '../actions/shared';
 import Dashboard from './Dashboard';
 import authedUser from '../reducers/authedUser';
 import LoadingBarContainer from 'react-redux-loading-bar';
+import NewTweet from './NewTweet';
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData());
@@ -15,7 +16,7 @@ class App extends Component {
           <LoadingBarContainer/>
           {
             this.props.loading === true ?
-                null : <Dashboard/>
+                null : <NewTweet/>
           }
         </div>
     );

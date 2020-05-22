@@ -4,6 +4,7 @@ import {formatDate, formatTweet} from '../utils/helpers';
 import {TiArrowBackOutline} from 'react-icons/all';
 import {TiHeartFullOutline} from 'react-icons/all';
 import {TiHeartOutline} from 'react-icons/all';
+import {handleToggleTweet} from '../actions/tweets';
 
 class Tweet extends Component {
   
@@ -14,8 +15,15 @@ class Tweet extends Component {
   
   handleLike = (e) => {
     e.preventDefault();
-    
-    //TODO: handle like
+    // todo: Handle Like Tweet
+  
+    const { dispatch, tweet, authedUser } = this.props;
+    console.log('Auth: ', authedUser);
+    dispatch(handleToggleTweet({
+      id: tweet.id,
+      hasLiked: tweet.hasLiked,
+      authedUser,
+    }));
   };
   
   render() {
@@ -48,11 +56,12 @@ class Tweet extends Component {
               <p>{text}</p>
             </div>
             <div className='tweet-icons'>
-              <TiArrowBackOutline className='tweet-icon' />
+              <TiArrowBackOutline className='tweet-icon'/>
               <span>{replies !== 0 && replies}</span>
               <button className='heart-button' onClick={this.handleLike}>
                 {hasLiked === true
-                    ? <TiHeartFullOutline color='#e0245e' className='tweet-icon' />
+                    ?
+                    <TiHeartFullOutline color='#e0245e' className='tweet-icon'/>
                     : <TiHeartOutline className='tweet-icon'/>}
               </button>
               <span>{likes !== 0 && likes}</span>
@@ -69,6 +78,7 @@ function mapStateToProps({tweets, authedUser, users}, {id}) {
   const parentTweet = tweet ? tweets[tweet.replyingTo] : null;
   
   return {
+    authedUser,
     tweet: tweet ? formatTweet(tweet, users[tweet.author], authedUser,
         parentTweet) : null,
   };
